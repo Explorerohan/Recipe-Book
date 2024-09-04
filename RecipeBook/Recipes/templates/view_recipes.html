@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>View Recipes</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/js/all.min.js"></script>
+    <style>
+        /* Additional CSS to ensure background image covers the screen */
+        body {
+            background-image: url('https://images.unsplash.com/photo-1504674900247-0877df9cc836');
+            background-size: cover;
+            background-position: center;
+            background-attachment: fixed;
+            background-repeat: no-repeat;
+            margin: 0;
+        }
+    </style>
+</head>
+
+<body>
+    <!-- Navbar -->
+    <nav class="bg-black bg-opacity-60 backdrop-blur-lg shadow-lg">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex items-center justify-between h-16">
+                <!-- Logo Section -->
+                <div class="flex items-center">
+                    <p class="text-2xl font-extrabold text-white hover:text-gray-200 flex items-center">
+                        <i class="fas fa-utensils mr-2"></i> RecipeBook
+                    </p>
+                </div>
+                
+                <!-- Navigation Links -->
+                <div class="hidden md:flex space-x-6 items-center">
+                    <a href="/view-recipes/" class="text-white font-semibold py-2 px-4 rounded-md hover:bg-white hover:text-gray-900 transition duration-300 ease-in-out">
+                        <i class="fas fa-book-open mr-2"></i>View Recipes
+                    </a>
+                    <a href="/add-recipes/" class="text-white font-semibold py-2 px-4 rounded-md hover:bg-white hover:text-gray-900 transition duration-300 ease-in-out">
+                        <i class="fas fa-plus mr-2"></i>Add Recipe
+                    </a>
+                </div>
+                
+                <!-- Search and Logout Section -->
+                <div class="flex items-center space-x-4">
+                    <form class="hidden sm:flex">
+                        <input name="search" type="text" placeholder="Search Recipes" class="py-2 px-4 rounded-md bg-white bg-opacity-30 text-white focus:outline-none focus:ring-2 focus:ring-gray-400" />
+                        <button type="submit" class="bg-blue-600 text-white font-bold py-2 px-4 rounded-md hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 ml-2">
+                            <i class="fas fa-search"></i>
+                        </button>
+                    </form>
+                    <a href="/logout/" class="text-white font-semibold py-2 px-4 rounded-md bg-red-600 hover:bg-red-700 transition duration-300 ease-in-out">
+                        <i class="fas fa-sign-out-alt"></i> Logout
+                    </a>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <div class="flex flex-col items-center justify-center min-h-screen bg-gray-900 bg-opacity-50">
+        <div class="max-w-4xl w-full p-8 rounded-lg shadow-lg bg-white bg-opacity-40 backdrop-blur-lg border border-gray-200">
+            <h1 class="text-3xl font-bold mb-6 text-gray-800 text-center">All Recipes</h1>
+            <div class="max-h-96 overflow-y-auto space-y-8">
+                <!-- Loop through each recipe and display it -->
+                {% for i in recipes %}
+                <div class="flex items-center justify-between p-4 border-b border-gray-300">
+                    <div class="flex items-center space-x-4">
+                        <img src="/media/{{i.image}}" alt="Recipe Image" class="w-32 h-32 rounded-md object-cover">
+                        <div>
+                            <h2 class="text-xl font-bold text-gray-800">Recipe Name: {{i.name}}</h2>
+                            <p class="text-gray-700" style="text-align: justify;">Recipe Description: {{i.description}}</p>
+                        </div>
+                    </div>
+                    <div class="flex flex-col space-y-4 ml-8">
+                        <a href='/delete/{{i.id}}' class="bg-red-500 text-white font-bold py-2 px-4 rounded-md hover:bg-red-600 focus:outline-none focus:ring-2 focus:ring-red-500">
+                            Delete
+                        </a>
+                        <a href='/update/{{i.id}}' class="bg-blue-500 text-white font-bold py-2 px-4 rounded-md hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-500">
+                            Update
+                        </a>
+                    </div>
+                </div>
+                
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+
+    <!-- Mobile Menu Toggle Script -->
+    <script>
+        const mobileMenuButton = document.getElementById('mobile-menu-button');
+        const mobileMenu = document.getElementById('mobile-menu');
+
+        mobileMenuButton.addEventListener('click', () => {
+            mobileMenu.classList.toggle('hidden');
+        });
+    </script>
+</body>
+
+</html>

@@ -10,3 +10,7 @@ def add_recipes(request):
         image = request.FILES.get('image')
         Recipe.objects.create(name=name, description=description,image=image)
     return render(request, 'add_recipes.html')
+
+def view_recipes(request):
+    recipes = Recipe.objects.all()
+    return render(request, 'view_recipes.html',{"recipes":recipes})
