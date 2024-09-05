@@ -3,8 +3,10 @@ from .models import Recipe
 from django.contrib.auth.models import User
 from django.contrib import messages
 from django.contrib.auth import authenticate,login, logout
+from django.contrib.auth.decorators import login_required
 
 # Create your views here.
+@login_required(login_url='/')
 def add_recipes(request):
     if request.method == 'POST':
         data = request.POST
@@ -14,17 +16,21 @@ def add_recipes(request):
         Recipe.objects.create(name=name, description=description,image=image)
     return render(request, 'add_recipes.html')
 
+@login_required(login_url="/")
 def view_recipes(request):
     recipes = Recipe.objects.all()
     if request.GET.get('search'):
         recipes =Recipe.objects.filter(name__icontains = request.GET.get('search'))    
     return render(request, 'view_recipes.html',{"recipes":recipes})
 
+@login_required(login_url="/")
 def delete_recipes(request,id):
     Recipes = Recipe.objects.get(id=id)
     Recipes.delete()
     return redirect('view-recipes')
 
+
+@login_required(login_url="/")
 def update_recipes(request,id):
     recipes = Recipe.objects.get(id=id)
     if request.method == 'POST':
@@ -73,3 +79,7 @@ def login_page(request):
             messages.error(request,'Invalid Password')
             return redirect('login-page')
     return render(request, 'login_page.html')
+
+def logout_page(request):
+    logout(request)
+    return redirect('login-page')
