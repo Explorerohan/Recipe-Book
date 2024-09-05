@@ -63,6 +63,8 @@
         <div class="max-w-4xl w-full p-8 rounded-lg shadow-lg bg-white bg-opacity-40 backdrop-blur-lg border border-gray-200">
             <h1 class="text-3xl font-bold mb-6 text-gray-800 text-center">All Recipes</h1>
             <div class="max-h-96 overflow-y-auto space-y-8">
+                <!-- Check if there are any recipes -->
+                {% if recipes %}
                 <!-- Loop through each recipe and display it -->
                 {% for i in recipes %}
                 <div class="flex items-center justify-between p-4 border-b border-gray-300">
@@ -74,7 +76,7 @@
                         </div>
                     </div>
                     <div class="flex flex-col space-y-4 ml-8">
-                        <a href='/delete/{{i.id}}' class="bg-red-500 text-white font-bold py-2 px-4 rounded-md hover:bg-red-600 focus:outline-none focus:ring-2 focus:ring-red-500">
+                        <a href='/delete-recipes/{{i.id}}' class="bg-red-500 text-white font-bold py-2 px-4 rounded-md hover:bg-red-600 focus:outline-none focus:ring-2 focus:ring-red-500">
                             Delete
                         </a>
                         <a href='/update/{{i.id}}' class="bg-blue-500 text-white font-bold py-2 px-4 rounded-md hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-500">
@@ -82,8 +84,11 @@
                         </a>
                     </div>
                 </div>
-                
                 {% endfor %}
+                {% else %}
+                <!-- Message if no recipes are available -->
+                <p class="text-center text-gray-700 text-lg font-semibold">No recipes available at the moment.</p>
+                {% endif %}
             </div>
         </div>
     </div>

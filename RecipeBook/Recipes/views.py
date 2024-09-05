@@ -1,4 +1,4 @@
-from django.shortcuts import render
+from django.shortcuts import render,redirect
 from .models import Recipe
 
 # Create your views here.
@@ -13,4 +13,11 @@ def add_recipes(request):
 
 def view_recipes(request):
     recipes = Recipe.objects.all()
+    if request.GET.get('search'):
+        recipes =Recipe.objects.filter(name__icontains = request.GET.get('search'))    
     return render(request, 'view_recipes.html',{"recipes":recipes})
+
+def delete_recipes(request,id):
+    Recipes = Recipe.objects.get(id=id)
+    Recipes.delete()
+    return redirect('view-recipes')
