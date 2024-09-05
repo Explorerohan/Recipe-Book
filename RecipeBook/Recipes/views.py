@@ -1,5 +1,7 @@
 from django.shortcuts import render,redirect
 from .models import Recipe
+from django.contrib.auth.models import User
+from django.contrib import messages
 
 # Create your views here.
 def add_recipes(request):
@@ -34,3 +36,23 @@ def update_recipes(request,id):
         recipes.save()
         return redirect('view-recipes')
     return render(request, 'update_recipes.html', {'recipes': recipes})
+
+def signup_page(request):
+    if request.method == 'POST':
+        data = request.POST
+        username = data.get('username')
+        email = data.get('email')
+        password = data.get('password')
+        user = User.objects.filter(username=username)
+        if user.exists():
+            messages.error(request,"Username already exist.")
+            return redirect('signup-page')
+        user = User.objects.filter(email=email)
+        if user.exists():
+            messages.error(request,"Email address already used.")
+            return redirect('signup-page')
+        user = User.objects.create(username = username, email = email)
+        user.set_password(password)
+        user.save()
+        messages.success(request,"Successfully Created Account. Remember to login.")
+    return render(request, 'signup_page.html')
