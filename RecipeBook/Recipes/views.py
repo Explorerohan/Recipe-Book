@@ -2,6 +2,7 @@ from django.shortcuts import render,redirect
 from .models import Recipe
 from django.contrib.auth.models import User
 from django.contrib import messages
+from django.contrib.auth import authenticate,login, logout
 
 # Create your views here.
 def add_recipes(request):
@@ -56,3 +57,19 @@ def signup_page(request):
         user.save()
         messages.success(request,"Successfully Created Account. Remember to login.")
     return render(request, 'signup_page.html')
+
+def login_page(request):
+    if request.method == 'POST':
+        username = request.POST.get('username')
+        password = request.POST.get('password')
+        if not User.objects.filter(username=username).exists():
+            messages.error(request,'Invalid Username')
+            return redirect('login-page')
+        user = authenticate(username = username, password = password)
+        if user is not None:
+            login(request, user)
+            return redirect('view-recipes')
+        else:
+            messages.error(request,'Invalid Password')
+            return redirect('login-page')
+    return render(request, 'login_page.html')

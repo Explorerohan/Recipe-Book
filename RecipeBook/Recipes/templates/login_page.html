@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Signup Page</title>
+    <title>Login Page</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/js/all.min.js"></script>
     <style>
@@ -35,88 +35,38 @@
         h2 {
             text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.2);
         }
-
-        /* Message Styling */
-        .messages {
-            margin-bottom: 1rem;
-            padding: 0;
-        }
-
-        .messages li {
-            list-style: none;
-            padding: 10px;
-            margin-bottom: 8px;
-            border-radius: 5px;
-            font-size: 14px;
-        }
-
-        .messages li.success {
-            background-color: #D1FAE5;
-            color: #065F46;
-            border-left: 4px solid #10B981;
-        }
-
-        .messages li.error {
-            background-color: #FEE2E2;
-            color: #B91C1C;
-            border-left: 4px solid #EF4444;
-        }
-
-        .messages li.warning {
-            background-color: #FEF3C7;
-            color: #B45309;
-            border-left: 4px solid #F59E0B;
-        }
-
-        .messages li.info {
-            background-color: #DBEAFE;
-            color: #1D4ED8;
-            border-left: 4px solid #3B82F6;
-        }
     </style>
 </head>
 
 <body class="bg-cover bg-center h-screen" style="background-image: url('https://images.unsplash.com/photo-1504674900247-0877df9cc836');">
-    <!-- Signup Form -->
+    <!-- Login Form -->
     <div class="flex items-center justify-center h-screen bg-gray-900 bg-opacity-70">
         <div class="max-w-lg w-full p-8 rounded-lg shadow-lg bg-white bg-opacity-80 backdrop-blur-lg border border-gray-200">
-            <h2 class="text-3xl font-extrabold text-center mb-6">Create Your Account</h2>
-            
+            <h2 class="text-3xl font-extrabold text-center mb-6">Log In to Your Account</h2>
             <form method="POST" class="space-y-6">
                 {% csrf_token %}
-                
-                <!-- Display messages if present -->
                 {% if messages %}
                 <ul class="messages">
                     {% for message in messages %}
-                    <li class="{% if message.tags %}{{ message.tags }}{% endif %}">
-                        {% if message.level == DEFAULT_MESSAGE_LEVELS.ERROR %} {% endif %}
+                    <li{% if message.tags %} class="{{ message.tags }}"{% endif %}>
+                        {% if message.level == DEFAULT_MESSAGE_LEVELs.ERROR %}Important: {% endif %}
                         {{ message }}
                     </li>
                     {% endfor %}
                 </ul>
                 {% endif %}
-                
                 <div>
                     <label for="username" class="block text-sm font-medium">Username</label>
                     <input type="text" id="username" name="username" placeholder="Enter your Username" class="form-input mt-1 block w-full px-3 py-2 rounded-md border border-gray-300 shadow-sm focus:outline-none focus:ring-2 focus:ring-green-500 sm:text-sm" required>
                 </div>
-                
-                <div>
-                    <label for="email" class="block text-sm font-medium">Email Address</label>
-                    <input type="email" id="email" name="email" placeholder="Enter your email" class="form-input mt-1 block w-full px-3 py-2 rounded-md border border-gray-300 shadow-sm focus:outline-none focus:ring-2 focus:ring-green-500 sm:text-sm" required>
-                </div>
-                
                 <div>
                     <label for="password" class="block text-sm font-medium">Password</label>
-                    <input type="password" id="password" name="password" placeholder="Create a password" class="form-input mt-1 block w-full px-3 py-2 rounded-md border border-gray-300 shadow-sm focus:outline-none focus:ring-2 focus:ring-green-500 sm:text-sm" required>
+                    <input type="password" id="password" name="password" placeholder="Enter your Password" class="form-input mt-1 block w-full px-3 py-2 rounded-md border border-gray-300 shadow-sm focus:outline-none focus:ring-2 focus:ring-green-500 sm:text-sm" required>
                 </div>
-                
-                <button type="submit" class="button-primary w-full py-2 px-4 rounded-md font-semibold text-center">Sign Up</button>
+                <button type="submit" class="button-primary w-full py-2 px-4 rounded-md font-semibold text-center">Log In</button>
             </form>
-
             <p class="mt-4 text-center text-sm">
-                Already have an account? <a href="/" class="text-blue-500 hover:underline">Log in</a>
+                Don't have an account? <a href="/signup_page/" class="text-blue-500 hover:underline">Sign up</a>
             </p>
         </div>
     </div>
