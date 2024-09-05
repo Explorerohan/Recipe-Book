@@ -21,3 +21,16 @@ def delete_recipes(request,id):
     Recipes = Recipe.objects.get(id=id)
     Recipes.delete()
     return redirect('view-recipes')
+
+def update_recipes(request,id):
+    recipes = Recipe.objects.get(id=id)
+    if request.method == 'POST':
+        data = request.POST
+        recipes.name = data.get('name')
+        recipes.description = data.get('description')
+        image = request.FILES.get('image')
+        if image:
+            recipes.image = image
+        recipes.save()
+        return redirect('view-recipes')
+    return render(request, 'update_recipes.html', {'recipes': recipes})
