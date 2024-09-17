@@ -5,7 +5,7 @@ from django.contrib import messages
 from django.contrib.auth import authenticate,login, logout
 from django.contrib.auth.decorators import login_required
 
-# Create your views here.
+# Creating my views here.
 @login_required(login_url='/')
 def add_recipes(request):
     if request.method == 'POST':
