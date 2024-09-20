@@ -26,20 +26,29 @@
             background-color: #2563EB;
         }
 
-        /* Improve text readability */
-        h2, label, p {
-            color: #111827; /* Darker text color for readability */
+        h2,
+        label,
+        p {
+            color: #111827;
         }
 
-        /* Add a text shadow for better readability */
         h2 {
             text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.2);
+        }
+
+        .eye-icon {
+            position: absolute;
+            right: 10px;
+            top: 68%;
+            transform: translateY(-50%);
+            cursor: pointer;
+            color: #3B82F6;
+            display: none; /* Initially hidden */
         }
     </style>
 </head>
 
 <body class="bg-cover bg-center h-screen" style="background-image: url('https://images.unsplash.com/photo-1504674900247-0877df9cc836');">
-    <!-- Login Form -->
     <div class="flex items-center justify-center h-screen bg-gray-900 bg-opacity-70">
         <div class="max-w-lg w-full p-8 rounded-lg shadow-lg bg-white bg-opacity-80 backdrop-blur-lg border border-gray-200">
             <h2 class="text-3xl font-extrabold text-center mb-6">Log In to Your Account</h2>
@@ -59,9 +68,12 @@
                     <label for="username" class="block text-sm font-medium">Username</label>
                     <input type="text" id="username" name="username" placeholder="Enter your Username" class="form-input mt-1 block w-full px-3 py-2 rounded-md border border-gray-300 shadow-sm focus:outline-none focus:ring-2 focus:ring-green-500 sm:text-sm" required>
                 </div>
-                <div>
+                <div class="relative">
                     <label for="password" class="block text-sm font-medium">Password</label>
                     <input type="password" id="password" name="password" placeholder="Enter your Password" class="form-input mt-1 block w-full px-3 py-2 rounded-md border border-gray-300 shadow-sm focus:outline-none focus:ring-2 focus:ring-green-500 sm:text-sm" required>
+                    <span id="togglePassword" class="eye-icon">
+                        <i class="fas fa-eye" id="eyeIcon"></i>
+                    </span>
                 </div>
                 <button type="submit" class="button-primary w-full py-2 px-4 rounded-md font-semibold text-center">Log In</button>
             </form>
@@ -70,6 +82,28 @@
             </p>
         </div>
     </div>
+
+    <script>
+        const togglePassword = document.getElementById('togglePassword');
+        const passwordInput = document.getElementById('password');
+        const eyeIcon = document.getElementById('eyeIcon');
+
+        // Function to show/hide the eye icon
+        const toggleEyeIcon = () => {
+            togglePassword.style.display = passwordInput.value ? 'block' : 'none';
+        };
+
+        passwordInput.addEventListener('input', toggleEyeIcon);
+        togglePassword.addEventListener('click', function () {
+            const type = passwordInput.getAttribute('type') === 'password' ? 'text' : 'password';
+            passwordInput.setAttribute('type', type);
+            eyeIcon.classList.toggle('fa-eye');
+            eyeIcon.classList.toggle('fa-eye-slash');
+        });
+
+        // Initial call to set eye icon visibility based on input value
+        toggleEyeIcon();
+    </script>
 </body>
 
 </html>
